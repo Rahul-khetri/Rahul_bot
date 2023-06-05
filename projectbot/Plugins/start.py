@@ -21,3 +21,6 @@ async def start(event):
 @bot.on(events.NewMessage(incoming=True, pattern="/eval"))
 async def start(event):
   await event.reply("Hello! This is eval command")
+@bot.on(events.NewMessage(incoming=True, pattern="/hello"))
+async def start(event):
+  await event.reply("Hello this is hello command")

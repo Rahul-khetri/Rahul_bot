@@ -8,5 +8,4 @@ api_hash ="4772d1792ed194020a8fb06a91ffb8fa"
 
 bot_token ="5851167169:AAHme1gljkjYn6jTw-y3xaXoUIw5blyIR0g"
 
-bot =TelegramClient("mybot", api_id, api_hash).start(bot_token=bot_token)
-print(bot)
+bot =  TelegramClient("projectbot", api_id, api_hash).start(bot_token=bot_token)

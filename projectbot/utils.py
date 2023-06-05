@@ -11,4 +11,4 @@ def load_plug(plug_name):
   load.logger = logging.getLogger(plug_name)
   spec.loader.exec_module(load)
   sys.modules["projectbot.plugins." + plug_name] = load
-  print("mybot loaded" + plug_name)
+  print("PROJECTBOT loaded" + plug_name)
