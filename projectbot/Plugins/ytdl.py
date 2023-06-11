@@ -210,7 +210,7 @@ async def download_video(event):
 
       )
 
-      os.remove(f"{ytdl_data['id']}.mp3.mp3.mp3") 
+      os.remove(f"{ytdl_data['id']}.mp3.mp3") 
 
       await vtx.delete()    
 
