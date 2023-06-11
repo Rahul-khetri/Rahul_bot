@@ -50,7 +50,7 @@ async def download_video(event):
 
   type = rl[0]
 
-  
+
 
   
 
