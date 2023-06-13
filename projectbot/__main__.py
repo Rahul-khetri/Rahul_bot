@@ -14,7 +14,7 @@ for name in files:
      pxt = Path(a.name)
      plugs = pxt.stem
      load_plug(plugs.replace(".py",""))
-     print("SAINISAB_BOT HAS STARTED AND LOADED ALL PLUGINS")
+     print("DUDE_BOT HAS STARTED AND LOADED ALL PLUGINS")
      
 if __name__ == "__main__":
  
