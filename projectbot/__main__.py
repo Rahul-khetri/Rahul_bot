@@ -16,7 +16,7 @@ for name in files:
      load_plug(plugs.replace(".py",""))
      print("SAINISAB_BOT HAS STARTED AND LOADED ALL PLUGINS")
      
-if __name__ == "__main__":
+if__name__ == "__main__":
  
  
 if len(argv) not in (1, 3, 4):
