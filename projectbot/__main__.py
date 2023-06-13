@@ -18,12 +18,12 @@ for name in files:
      
 if__name__ == "__main__":
  
- 
-if len(argv) not in (1, 3, 4):
+
+  if len(argv) not in (1, 3, 4):
 
     bot.disconnect()
 
-else:
+  else:
 
     bot.run_until_disconnected()
  
