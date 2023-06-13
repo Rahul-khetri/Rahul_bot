@@ -1,7 +1,9 @@
 import glob
 from pathlib import Path
 from projectbot.utils import load_plug
-import logging
+import logging 
+from sys import argv
+
 from . import bot
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level= logging.WARNING)
 path = "projectbot/plugins/*.py"
