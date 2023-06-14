@@ -59,7 +59,7 @@ async def _(event):
 
     # either here, or before translation 
 
-    output_str = """**Translated By DUDE_bot **\n\nSource **({})**\n\nTranslation **({})**{}""".format(
+    output_str = """**Translated By Gabber_is_back_bot **\n\nSource **({})**\n\nTranslation **({})**{}""".format(
 
       translated.src, lan, after_tr_text)
 
