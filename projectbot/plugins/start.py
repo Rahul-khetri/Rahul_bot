@@ -7,7 +7,7 @@ import asyncio
 
 @bot.on(events.NewMessage(incoming=True,pattern="/start"))
 async def start(event):
-  await event.reply("Hello This is Sainisab_Bot")
+  await event.reply("Hello This is Gabber_is_back_Bot")
   
   
 @bot.on(events.NewMessage(incoming=True , pattern="/get"))
