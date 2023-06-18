@@ -5,6 +5,7 @@ import os
 import time
 from .. import bot
 from telethon import events
+
 from telethon.tl.types import DocumentAttributeAudio
 from yt_dlp import YoutubeDL
 from yt_dlp.utils import (
@@ -17,7 +18,9 @@ from yt_dlp.utils import (
     UnavailableVideoError,
     XAttrMetadataError,
 )
+
 @bot.on(events.NewMessage(incoming=True, pattern="/yt ?(.*)"))
+
 async def download_video(event):
   url = None
   t_type = None
@@ -25,251 +28,135 @@ async def download_video(event):
   rl = typee.split(" ")
   url = rl[1]
   type = rl[0]
-   await event.reply(url)
-
+  
+  
+  await event.reply(url)
   vtx = await event.reply("`Preparing to download...`")
   if type == "a":
         opts = {
             "format": "bestaudio",
             "addmetadata": True,
-
             "key": "FFmpegMetadata",
-
             "writethumbnail": True,
-
             "prefer_ffmpeg": True,
-
             "geo_bypass": True,
-
             "nocheckcertificate": True,
-
             "postprocessors": [
-
                 {
-
                     "key": "FFmpegExtractAudio",
-
                     "preferredcodec": "mp3",
-
                     "preferredquality": "480",
-
                 }
-
             ],
-
             "outtmpl": "%(id)s.mp3",
-
             "quiet": True,
-
             "logtostderr": False,
-
         }
-
         video = False
-
         song = True
-
         
-
   elif type == "v": 
-
         opts = {
-
             "format": "best",
-
             "addmetadata": True,
-
             "key": "FFmpegMetadata",
-
             "prefer_ffmpeg": True,
-
             "geo_bypass": True,
-
             "nocheckcertificate": True,
-
             "postprocessors": [
-
                 {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
-
             ],
-
             "outtmpl": "%(id)s.mp4",
-
             "logtostderr": False,
-
             "quiet": True,
-
         }
-
         song = False
-
         video = True
-
         
-
   try:
-
       await vtx.edit("Fetching data, please wait..")
-
       with YoutubeDL(opts) as ytdl:
-
         ytdl_data = ytdl.extract_info(url)
-
         
-
   except DownloadError as DE:
-
       await vtx.edit(f"{str(DE)}")
-
       return
-
   except ContentTooShortError:
-
       await vtx.edit("`The download content was too short.`")
-
       return
-
   except GeoRestrictedError:
-
       await vtx.edit(
-
             "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
-
         )
-
       return
-
   except MaxDownloadsReached:
-
       await vtx.edit("`Max-downloads limit has been reached.`")
-
       return
-
   except PostProcessingError:
-
       await vtx.edit("`There was an error during post processing.`")
-
       return
-
   except UnavailableVideoError:
-
       await vtx.edit("`Media is not available in the requested format.`")
-
       return
-
   except XAttrMetadataError as XAME:
-
       await vtx.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
-
       return
-
   except ExtractorError:
-
       await vtx.edit("`There was an error during info extraction.`")
-
       return
-
   except Exception as e:
-
       await vtx.edit(f"{str(type(e)): {str(e)}}")
-
       return
-
   
-
       
-
   c_time = time.time()
-
   
-
   if song:
-
       await vtx.edit(
-
           f" `Preparing to upload song:`\
-
       \n**{ytdl_data['title']}**\
-
       \nby *{ytdl_data['uploader']}*"
-
       )
-
       await bot.send_file(
-
           event.chat_id,
-
           f"{ytdl_data['id']}.mp3.mp3",
-
           supports_streaming=True,
-
           attributes=[
-
               DocumentAttributeAudio(
-
                   duration=int(ytdl_data["duration"]),
-
                   title=str(ytdl_data['title']),
-
                   performer=str(ytdl_data["uploader"]),
-
               )   
-
           ],
-
           progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-
             progress(
-
                 d, t, vtx, c_time, "uploading..", f"{ytdl_data['title']}.mp3"
             )
          ),
       )
-
       os.remove(f"{ytdl_data['id']}.mp3.mp3")      
-
       await vtx.delete()  
-
       
-
   elif video: 
-
       await vtx.edit(
-
           f" Preparing to upload video:\
-
       \n{ytdl_data['title']}\
-
       \nby *{ytdl_data['uploader']}*"
-
       )
-
       await bot.send_file( 
-
           event.chat_id, 
-
           f"{ytdl_data['id']}.mp4", 
-
           supports_streaming=True, 
-
           caption=ytdl_data["title"], 
-
           progress_callback=lambda d, t: asyncio.get_event_loop().create_task( 
-
             progress( 
-
                 d, t, vtx, c_time, "Uploading..", f"{ytdl_data['title']}.mp4" 
-
             ) 
-
          ), 
-
       ) 
-
       os.remove(f"{ytdl_data['id']}.mp4")
-
       await vtx.delete()
-
+        
         
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -289,90 +176,43 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
             humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
         )
-
         if file_name:
-
             await event.edit(
-
                 "{}\nFile Name: `{}`\n{}".format(type_of_ps, file_name, tmp)
-
             )
-
         else:
-
             await event.edit("{}\n{}".format(type_of_ps, tmp))
 
+
 def humanbytes(size):
-
     """Input size in bytes,
-
     outputs in a human readable format"""
-
     # https://stackoverflow.com/a/49361727/4723940
-
     if not size:
-
         return ""
-
     # 2 ** 10 = 1024
-
     power = 2 ** 10
-
     raised_to_pow = 0
-
     dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
-
     while size > power:
-
         size /= power
-
         raised_to_pow += 1
-
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+
 def time_formatter(milliseconds: int) -> str:
-
     """Inputs time in milliseconds, to get beautified time,
-
     as string"""
-
     seconds, milliseconds = divmod(int(milliseconds), 1000)
-
     minutes, seconds = divmod(seconds, 60)
-
     hours, minutes = divmod(minutes, 60)
-
     days, hours = divmod(hours, 24)
-
     tmp = (
-
         ((str(days) + " day(s), ") if days else "")
-
         + ((str(hours) + " hour(s), ") if hours else "")
-
         + ((str(minutes) + " minute(s), ") if minutes else "")
-
         + ((str(seconds) + " second(s), ") if seconds else "")
-
         + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
-
     )
-
     return tmp[:-2]
-
         
-
- 
-
-            
- 
-
-  
-
-      
-
-  
-
-
-         
-     
