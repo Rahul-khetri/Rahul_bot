@@ -1,71 +1,36 @@
 #audio and video downloader using youtube
-
 import asyncio
-
 import math
-
 import os
-
 import time
-
 from .. import bot
-
 from telethon import events
-
 from telethon.tl.types import DocumentAttributeAudio
-
 from yt_dlp import YoutubeDL
-
 from yt_dlp.utils import (
-
     ContentTooShortError,
-
     DownloadError,
-
     ExtractorError,
-
     GeoRestrictedError,
-
     MaxDownloadsReached,
-
     PostProcessingError,
-
     UnavailableVideoError,
-
     XAttrMetadataError,
-
 )
-
 @bot.on(events.NewMessage(incoming=True, pattern="/yt ?(.*)"))
-
 async def download_video(event):
-
   url = None
-
   t_type = None
-
   typee = str(event.pattern_match.group(1))
-
   rl = typee.split(" ")
-
   url = rl[1]
-
   type = rl[0]
-
-  
-
-  
-
-  await event.reply(url)
+   await event.reply(url)
 
   vtx = await event.reply("`Preparing to download...`")
-
   if type == "a":
-
         opts = {
-
             "format": "bestaudio",
-
             "addmetadata": True,
 
             "key": "FFmpegMetadata",
@@ -257,11 +222,8 @@ async def download_video(event):
             progress(
 
                 d, t, vtx, c_time, "uploading..", f"{ytdl_data['title']}.mp3"
-
             )
-
          ),
-
       )
 
       os.remove(f"{ytdl_data['id']}.mp3.mp3")      
